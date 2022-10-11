@@ -1,5 +1,5 @@
 import React from 'react';
-import { StatusBar , SafeAreaView, View} from 'react-native';
+import { StatusBar , SafeAreaView} from 'react-native';
 
 import { 
   useFonts,
@@ -24,7 +24,7 @@ export default function App() {
   }
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{ flex: 1 }} >
       <StatusBar/>
       
       <Cesta {...mock} /> 
