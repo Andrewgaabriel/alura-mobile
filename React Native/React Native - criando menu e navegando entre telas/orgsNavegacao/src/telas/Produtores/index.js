@@ -25,7 +25,7 @@ export default function Produtores({ melhoresProdutores }) {
     return <>
       <Topo melhoresProdutores={melhoresProdutores} />
       {/* se o nomeCompra for undefined ele não mostra, caso contrário, mostra */}
-      { nomeCompra && <Text style={estilos.compra} > { mensagemCompleta } </Text> }
+      { !!nomeCompra && <Text style={estilos.compra} > { mensagemCompleta } </Text> }
       <Text style={estilos.titulo}>{tituloProdutores}</Text>
     </>
   }
