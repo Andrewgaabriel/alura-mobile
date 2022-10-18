@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { FlatList, Text, StyleSheet } from 'react-native';
 
 import Produtor from './componentes/Produtor';
@@ -12,11 +12,34 @@ export default function Produtores({ melhoresProdutores }) {
   const navigation = useNavigation();
   const route = useRoute();
 
+  const [ exibeMensagem, setExibeMensagem ] = useState(false);
+
   const lista = useProdutores(melhoresProdutores);
   const { tituloProdutores, mensagemCompra } = useTextos();
 
   const nomeCompra = route.params?.compra.nome;
+  const timestampCompra = route.params?.compra.timestamp;
   const mensagemCompleta = mensagemCompra?.replace('$NOME', nomeCompra);
+
+  console.log(timestampCompra);
+
+
+  /* CAda vez que o nomeCompra alterar vai ser executado esse código */
+  useEffect(()=> {
+    setExibeMensagem(!!nomeCompra);
+    let timeout;
+
+    if (nomeCompra) {
+      timeout = setTimeout(()=> {
+        setExibeMensagem(false);
+      }, 3000)
+    }
+
+    return () => {
+      clearTimeout(timeout);
+    }
+
+  }, [timestampCompra])
 
 
 
@@ -25,7 +48,7 @@ export default function Produtores({ melhoresProdutores }) {
     return <>
       <Topo melhoresProdutores={melhoresProdutores} />
       {/* se o nomeCompra for undefined ele não mostra, caso contrário, mostra */}
-      { !!nomeCompra && <Text style={estilos.compra} > { mensagemCompleta } </Text> }
+      { exibeMensagem && <Text style={estilos.compra} > { mensagemCompleta } </Text> }
       <Text style={estilos.titulo}>{tituloProdutores}</Text>
     </>
   }
